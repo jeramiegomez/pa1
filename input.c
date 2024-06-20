@@ -18,7 +18,7 @@ typedef struct {
 
 // Function declarations
 ListNode * createList(int valn);
-void printList(ListNode * head);
+void printList(ListNode * head);//edit
 ListNode * deleteNode(ListNode * head, int valueToDelete);
 Command* create_command();
 void free_command(Command *cmd);
