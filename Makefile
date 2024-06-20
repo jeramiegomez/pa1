@@ -1,4 +1,14 @@
+CC = gcc
+CFLAGS = -g -std=c11
+EXECUTABLE = pa1
+SRC_C = test.c
 
 
-pa1:
-	gcc input.c -o pa1
+default: $(EXECUTABLE)
+
+$(EXECUTABLE): $(SRC_C)
+	$(CC) -o $(EXECUTABLE) $(SRC_C) $(CFLAGS)
+
+
+run:
+	./$(EXECUTABLE)
