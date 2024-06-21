@@ -17,12 +17,17 @@ window* open_windows(window **windows, int windowID) {
 
 void switch_windows(window **windows, int windowID) {
     window *temp = *windows;
-    while (temp != NULL) {
-        if (temp->window_num == windowID) {
-            *windows = temp;
-            return;
-        }
+    window *prev = NULL;
+
+    while (temp != NULL && temp->window_num != windowID) {
+        prev = temp;
         temp = temp->next;
+    }
+
+    if (temp != NULL && prev != NULL) {
+        prev->next = temp->next;
+        temp->next = *windows;
+        *windows = temp;
     }
 }
 
@@ -46,27 +51,16 @@ void close_windows(window **windows, int windowID) {
     free(temp);
 }
 
-void clean_up_windows(window *windows) {
-    window *temp;
-    while (windows != NULL) {
-        temp = windows;
-        windows = windows->next;
-        free(temp);
-    }
-}
-
 int main() {
     char operation[10];
     int windowID;
     window *windows = NULL;
 
     while (1) {
-        if (scanf("%s %d", operation, &windowID) != 2) {
-            break;
-        }
+        scanf("%s %d", operation, &windowID);
 
         if (!strcmp(operation, "open")) {
-            windows = open_windows(&windows, windowID);
+            open_windows(&windows, windowID);
             printf("%d\n", windows->window_num);
         } else if (!strcmp(operation, "switch")) {
             switch_windows(&windows, windowID);
@@ -83,7 +77,5 @@ int main() {
             }
         }
     }
-
-    clean_up_windows(windows);
     return 0;
 }

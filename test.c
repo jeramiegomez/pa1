@@ -51,8 +51,9 @@ int main() {
     char operation[10];
     int windowID;
     window *windows = NULL;
+    int counter = 1;
 
-    while (1) {
+    while (counter-- || windows != NULL ) {
         scanf("%s %d", operation, &windowID);
 
         if (!strcmp(operation, "open")) {
@@ -60,17 +61,17 @@ int main() {
             printf("%d\n", windows->window_num);
         } else if (!strcmp(operation, "switch")) {
             switch_windows(&windows, windowID);
-            if (windows != NULL) {
+           // if (windows != NULL) {
                 printf("%d\n", windows->window_num);
-            }
+            //}
         } else if (!strcmp(operation, "close")) {
             close_windows(&windows, windowID);
             if (windows == NULL) {
                 break;
             }
-            if (windows != NULL) {
+            //if (windows != NULL) {
                 printf("%d\n", windows->window_num);
-            }
+           // }
         }
     }
     return 0;
