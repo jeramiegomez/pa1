@@ -9,10 +9,6 @@ typedef struct window {
 
 window* open_windows(window **windows, int windowID) {
     window *new_window = (window*)malloc(sizeof(window));
-    if (!new_window) {
-        fprintf(stderr, "Memory allocation failed\n");
-        exit(1);
-    }
     new_window->window_num = windowID;
     new_window->next = *windows;
     *windows = new_window;
@@ -50,6 +46,15 @@ void close_windows(window **windows, int windowID) {
     free(temp);
 }
 
+void clean_up_windows(window *windows) {
+    window *temp;
+    while (windows != NULL) {
+        temp = windows;
+        windows = windows->next;
+        free(temp);
+    }
+}
+
 int main() {
     char operation[10];
     int windowID;
@@ -57,8 +62,7 @@ int main() {
 
     while (1) {
         if (scanf("%s %d", operation, &windowID) != 2) {
-            fprintf(stderr, "Invalid input\n");
-            continue;
+            break;
         }
 
         if (!strcmp(operation, "open")) {
@@ -80,12 +84,6 @@ int main() {
         }
     }
 
-    // Clean up any remaining windows to prevent memory leaks
-    while (windows != NULL) {
-        window *temp = windows;
-        windows = windows->next;
-        free(temp);
-    }
-
+    clean_up_windows(windows);
     return 0;
 }
