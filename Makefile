@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -g -std=c11
 EXECUTABLE = pa1
-SRC_C = test.c
+SRC_C = input.c
 
 
 default: $(EXECUTABLE)
